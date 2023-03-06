@@ -1,45 +1,18 @@
 package main
 
 import (
-	"golang.org/x/net/websocket"
-    "fmt"
-    "log"
-    "net/http"
+	_ "log"
+	"wmsidm/routers"
+
+	"github.com/gin-gonic/gin"
 )
-func Echo(ws *websocket.Conn) {
-    var err error
-
-    for {
-        var reply string
-
-        if err = websocket.Message.Receive(ws, &reply); err != nil {
-            fmt.Println("Can't receive")
-            break
-        }
-
-        fmt.Println("Received back from client: " + reply)
-
-        msg := "Received:  " + reply
-        fmt.Println("Sending to client: " + msg)
-
-        if err = websocket.Message.Send(ws, msg); err != nil {
-            fmt.Println("Can't send")
-            break
-        }
-    }
-}
 
 func main() {
-	log.Println("xxx")
-    http.Handle("/", websocket.Handler(Echo))
-	
-    // if err := http.ListenAndServe(":1234", nil); err != nil {
-	// 	log.Println("ttt",err)
-    //     log.Fatal("ListenAndServe:", err)
-    // }
-	log.Fatal(http.ListenAndServe(":7890", nil))
-	log.Println("ttt")
-	// else{
-	// 	log.Println("xxx")
-	// }
+	r := gin.Default()
+	routers.IDMRouter(r)
+	r.NoRoute(func(c *gin.Context) {
+		c.JSON(404, gin.H{"code": "404", "message": "Page not found"})
+	})
+	// port := os.Getenv("PORT")
+	r.Run(":7890")
 }
