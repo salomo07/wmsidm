@@ -2,7 +2,6 @@ package routers
 
 import (
 	"log"
-	"wmsidm/controllers"
 
 	"github.com/gin-gonic/gin"
 )
@@ -16,32 +15,25 @@ type RequestLog struct {
 }
 
 func IDMRouter(r *gin.Engine) {
-	r.Any("/idm/api/v1/*path", func(c *gin.Context) {
-		c.JSON(200, map[string]interface{}{"Lalala": "Yeyeye"})
-		log.Println("Ini dari : ", c.Request.Host+c.Request.URL.String())
-	})
-	test := r.Group("/test")
+	// r.Any("", func(c *gin.Context) {
+	// 	log.Println("Ini dari : ", c.Request.Host+c.Request.URL.String())
+	// })
+	// r.Any("/idm/api/v1/authenticate", func(c *gin.Context) {
+	// 	c.JSON(200, map[string]interface{}{"Lalala": "Yeyeye"})
+	// 	log.Println("Ini dari : ", c.Request.Host+c.Request.URL.String())
+	// })
+	// r.Any("/*path", func(c *gin.Context) {
+	// 	log.Println("dfgx")
+	// })
+	// r.GET("/idm/api/v1/authenticate", func(c *gin.Context) {
+	// 	log.Println("df", c.Request.Host+c.Request.URL.String())
+	// })
+	idmv1 := r.Group("/idm/api/v1/")
 	{
-		test.POST("/write", func(c *gin.Context) {
-			// jsonData, _ := c.GetRawData()
-			xxx := string(c.Request.URL.Path)
-			req := RequestLog{Ip: c.ClientIP(), UserAgent: c.Request.Header.Get("User-Agent"), Url: xxx}
-			// log.Println(c.ClientIP(),c.Request.URL,c.Request.Header.Get("User-Agent"))
-
-			c.Header("Content-Type", "application/json; charset=utf-8")
-			// succ,_:=controllers.SaveRedis("testx",string(jsonData))
-			// c.String(200, succ)
-			log.Println(req)
-		})
-		test.GET("/read", func(c *gin.Context) {
-			q, _ := c.GetQuery("key")
-			succ := controllers.GetRedis(q)
-			c.String(200, succ)
-		})
-		test.GET("/socket", func(c *gin.Context) {
-			log.Println("Ini socket")
-			c.HTML(200, "index.html", gin.H{})
-			log.Println("Ini socketxxx")
+		idmv1.GET("authenticate?:name", func(c *gin.Context) {
+			log.Println("df", c.Query("name"), c.Request.Host+c.Request.URL.String())
+			c.JSON(200, map[string]interface{}{"Lalala": "Yeyeye"})
+			log.Println("Ini dari : ", c.Request.Host+c.Request.URL.String())
 		})
 	}
 }
