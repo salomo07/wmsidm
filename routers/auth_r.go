@@ -1,8 +1,9 @@
 package routers
 
 import (
-	"github.com/gin-gonic/gin"
 	docs "wmsidm/docs"
+
+	"github.com/gin-gonic/gin"
 )
 
 type RequestLog struct {
@@ -30,7 +31,6 @@ func IDMRouter(r *gin.Engine) {
 		// @Failure      500  {object}  httputil.HTTPError
 		// @Router       /accounts/{id} [get]
 		idmv1.GET("authenticate?:name", func(c *gin.Context) {
-			// log.Println("df", c.Query("name"), c.Request.Host+c.Request.URL.String())
 			c.JSON(200, map[string]interface{}{"Lalala": "Yeyeye", "datauser": c.Query("qw")})
 			// log.Println("Ini dari : ", c.Request.Host+c.Request.URL.String())
 		})
