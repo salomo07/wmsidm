@@ -36,9 +36,8 @@ func main() {
 
 	routers.IDMRouter(r)
 	r.NoRoute(func(c *gin.Context) {
-		c.JSON(404, gin.H{"code": "404", "message": "Endpoint is not found"})
+		c.JSON(404, gin.H{"code": "404", "message": "Endpoint isn't found"})
 	})
-
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	// r.Run()
 	r.Run(":" + port)
