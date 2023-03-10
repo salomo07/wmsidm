@@ -20,19 +20,6 @@ func IDMRouter(r *gin.Engine) {
 	docs.SwaggerInfo.BasePath = "/api/v1"
 	idmv1 := r.Group("/idm/api/v1/")
 	{
-		// ShowAccount godoc
-		// @Summary      Show an account
-		// @Description  get string by ID
-		// @Tags         accounts
-		// @Accept       json
-		// @Produce      json
-		// @Param        id   path      int  true  "Account ID"
-		// @Success      200  {object}  model.Account
-		// @Failure      400  {object}  httputil.HTTPError
-		// @Failure      404  {object}  httputil.HTTPError
-		// @Failure      500  {object}  httputil.HTTPError
-		// @Router       /accounts/{id} [get]
-
 		idmv1.POST("/setredis?:key", func(c *gin.Context) {
 			c.Header("Content-Type", "application/json; charset=utf-8")
 			jsonData, err := c.GetRawData()
