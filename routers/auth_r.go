@@ -1,9 +1,10 @@
 package routers
 
 import (
+	"log"
 	"wmsidm/controllers"
 	docs "wmsidm/docs"
-"log"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -44,7 +45,7 @@ func IDMRouter(r *gin.Engine) {
 			} else {
 				xxx, errGet := controllers.GetRedis(c.Query("key"))
 				if errGet != "" {
-					log.Println("Error ----------------------------")
+					log.Println("Error on IDM - getredis")
 					c.JSON(500, map[string]interface{}{"error": errGet})
 				} else {
 					c.String(200, xxx)
