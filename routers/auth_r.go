@@ -16,6 +16,11 @@ type RequestLog struct {
 	Payload       string `json:"payload"`
 }
 
+func init() {
+	log.Println("Ini router")
+	log.Println("Ini controllerx", controllers.MD5_KEY)
+
+}
 func IDMRouter(r *gin.Engine) {
 
 	docs.SwaggerInfo.BasePath = "/api/v1"
@@ -38,6 +43,7 @@ func IDMRouter(r *gin.Engine) {
 			}
 
 		})
+
 		idmv1.GET("/getredis?:key", func(c *gin.Context) {
 			c.Header("Content-Type", "application/json; charset=utf-8")
 			if c.Query("key") == "" {

@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "log"
+	"log"
 	"wmsidm/routers"
 
 	"github.com/gin-gonic/gin"
@@ -13,6 +13,7 @@ func main() {
 	port := "7890"
 	// os.Getenv("PORT")
 	r := gin.Default()
+	log.Println("Ini main")
 
 	routers.IDMRouter(r)
 	r.NoRoute(func(c *gin.Context) {
