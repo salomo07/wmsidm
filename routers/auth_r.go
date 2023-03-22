@@ -3,7 +3,6 @@ package routers
 import (
 	"log"
 	"wmsidm/controllers"
-	docs "wmsidm/docs"
 
 	"github.com/gin-gonic/gin"
 )
@@ -28,8 +27,20 @@ func IDMRouter(r *gin.Engine) {
 			} else if err != nil {
 				c.JSON(400, map[string]interface{}{"error": "Bad request body"})
 			} else {
+				c.JSON(200, map[string]interface{}{"result": "Ini contoh response"})
 				log.Println("",jsonData)
 			}
 		})
+		// idmv1.POST("/auth", func(c *gin.Context) {
+		// 	c.Header("Content-Type", "application/json; charset=utf-8")
+		// 	jsonData, err := c.GetRawData()
+		// 	if c.Query("k") != controllers.MD5_KEY {
+		// 		c.JSON(400, map[string]interface{}{"error": "Need API Key"})
+		// 	} else if err != nil {
+		// 		c.JSON(400, map[string]interface{}{"error": "Bad request body"})
+		// 	} else {
+		// 		log.Println("",jsonData)
+		// 	}
+		// })
 	}
 }
