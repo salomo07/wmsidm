@@ -16,46 +16,19 @@ type RequestLog struct {
 	Payload       string `json:"payload"`
 }
 
-func init() {
-	log.Println("Ini router")
-	log.Println("Ini controllerx", controllers.MD5_KEY)
-
-}
 func IDMRouter(r *gin.Engine) {
 
-	docs.SwaggerInfo.BasePath = "/api/v1"
 	idmv1 := r.Group("/idm/api/v1/")
 	{
-		idmv1.POST("/setredis?:key", func(c *gin.Context) {
+		idmv1.POST("/auth", func(c *gin.Context) {
 			c.Header("Content-Type", "application/json; charset=utf-8")
 			jsonData, err := c.GetRawData()
-			if err != nil {
+			if c.Query("k") != controllers.MD5_KEY {
+				c.JSON(400, map[string]interface{}{"error": "Need API Key"})
+			} else if err != nil {
 				c.JSON(400, map[string]interface{}{"error": "Bad request body"})
-			} else if c.Query("key") == "" {
-				c.JSON(400, map[string]interface{}{"error": "Key is not found"})
 			} else {
-				xxx, errSave := controllers.SaveRedis(c.Query("key"), string(jsonData))
-				if errSave != "" {
-					c.JSON(500, map[string]interface{}{"error": "Error occured when saving to redis server"})
-				} else {
-					c.String(200, xxx)
-				}
-			}
-
-		})
-
-		idmv1.GET("/getredis?:key", func(c *gin.Context) {
-			c.Header("Content-Type", "application/json; charset=utf-8")
-			if c.Query("key") == "" {
-				c.JSON(400, map[string]interface{}{"error": "Key is not found"})
-			} else {
-				xxx, errGet := controllers.GetRedis(c.Query("key"))
-				if errGet != "" {
-					log.Println("Error on IDM - getredis")
-					c.JSON(500, map[string]interface{}{"error": errGet})
-				} else {
-					c.String(200, xxx)
-				}
+				log.Println("",jsonData)
 			}
 		})
 	}

@@ -3,7 +3,7 @@ package controllers
 import (
 	"context"
 	"os"
-
+	"log"
 	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
 )
@@ -18,7 +18,6 @@ var ERROR_LOAD_ENV string
 var MD5_KEY string
 
 func init() {
-
 	er := godotenv.Load()
 	if er != nil {
 		panic("Fail to load .env file")
@@ -28,6 +27,7 @@ func init() {
 	REDIS_PASS = os.Getenv("REDIS_PASS")
 	REDIS_PORT = os.Getenv("REDIS_PORT")
 	MD5_KEY = os.Getenv("MD5_KEY")
+	log.Println(MD5_KEY)
 
 	opt, _ := redis.ParseURL("redis://" + REDIS_USER + ":" + REDIS_PASS + "@" + REDIS_HOST_CLOUD + ":" + REDIS_PORT)
 	rdb = redis.NewClient(opt)
