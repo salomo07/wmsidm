@@ -2,8 +2,9 @@ package controllers
 
 import (
 	"context"
-	"os"
 	"log"
+	"os"
+
 	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
 )
@@ -27,7 +28,7 @@ func init() {
 	REDIS_PASS = os.Getenv("REDIS_PASS")
 	REDIS_PORT = os.Getenv("REDIS_PORT")
 	MD5_KEY = os.Getenv("MD5_KEY")
-	log.Println(MD5_KEY)
+	log.Println("IDM ", MD5_KEY)
 
 	opt, _ := redis.ParseURL("redis://" + REDIS_USER + ":" + REDIS_PASS + "@" + REDIS_HOST_CLOUD + ":" + REDIS_PORT)
 	rdb = redis.NewClient(opt)
